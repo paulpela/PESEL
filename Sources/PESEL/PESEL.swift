@@ -1,6 +1,8 @@
 import Foundation
 
-struct PESEL {
+
+
+public struct PESEL {
     enum ValidationError: Error {
         case invalidNumber
         case numberTooShort(Int)
@@ -10,6 +12,25 @@ struct PESEL {
         case invalidDay(String)
         case invalidChecksum
     }
+    
+    enum Month: Int {
+        case january = 1
+        case february
+        case march
+        case april
+        case may
+        case june
+        case july
+        case august
+        case september
+        case october
+        case november
+        case december
+    }
+    
+    let year: Int
+    let month: Month
+    let day: Int
     
     init?(_ number: String) throws {
         if !CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: number)) {
@@ -53,6 +74,8 @@ struct PESEL {
             throw ValidationError.invalidDay(String(day))
         }
         
+        self.day = Int(day)!
+        
         let lastTwoYearDigits = number.prefix(2)
         
         var year = Int(lastTwoYearDigits)!
@@ -61,17 +84,24 @@ struct PESEL {
         switch monthInt {
         case 1...12:
             year += 1900
+            self.month = Month(rawValue: monthInt)!
         case 21...32:
             year += 2000
+            self.month = Month(rawValue: monthInt - 20)!
         case 41...52:
             year += 2100
+            self.month = Month(rawValue: monthInt - 40)!
         case 61...72:
             year += 2200
+            self.month = Month(rawValue: monthInt - 60)!
         case 81...92:
             year += 1800
+            self.month = Month(rawValue: monthInt - 80)!
         default:
             throw ValidationError.invalidMonth(String(month))
         }
+        
+        self.year = year
         
         if !PESEL.isLeapYear(year) && [ 2, 22, 42, 62, 82 ].contains(monthInt) && Int(day)! > 28 {
             throw ValidationError.invalidDay(String(day))
