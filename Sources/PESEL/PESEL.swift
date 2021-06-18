@@ -43,31 +43,35 @@ public struct PESEL {
             throw ValidationError.numberTooLong(number.count)
         }
         
-        let month = Int(number.prefix(4).suffix(2))!
+        guard let month = Int(number.prefix(4).suffix(2)) else {
+            throw ValidationError.invalidMonth(String(number.prefix(4).suffix(2)))
+        }
         
         if !PESEL.isValid(month: month) {
             throw ValidationError.invalidMonth(String(month))
         }
         
-        let day = number.prefix(6).suffix(2)
+        guard let day = Int(number.prefix(6).suffix(2)) else {
+            throw ValidationError.invalidDay(String(number.prefix(6).suffix(2)))
+        }
         
-        if day == "00" || Int(day)! > 31 {
+        if day == 0 || day > 31 {
             throw ValidationError.invalidDay(String(day))
         }
         
         let monthsWithMax29Days = [ 2, 22, 42, 62, 82 ]
         
-        if monthsWithMax29Days.contains(month) && Int(day)! > 29 {
+        if monthsWithMax29Days.contains(month) && day > 29 {
             throw ValidationError.invalidDay(String(day))
         }
         
         let monthsWith30Days = [4, 6, 9, 11, 24, 26, 29, 31, 44, 46, 49, 51, 64, 66, 69, 71, 84, 86, 89, 91 ]
         
-        if monthsWith30Days.contains(month) && Int(day)! > 30 {
+        if monthsWith30Days.contains(month) && day > 30 {
             throw ValidationError.invalidDay(String(day))
         }
         
-        self.day = Int(day)!
+        self.day = day
         
         let lastTwoYearDigits = number.prefix(2)
         
@@ -95,7 +99,7 @@ public struct PESEL {
         
         self.year = year
         
-        if !PESEL.isLeapYear(year) && [ 2, 22, 42, 62, 82 ].contains(month) && Int(day)! > 28 {
+        if !PESEL.isLeapYear(year) && [ 2, 22, 42, 62, 82 ].contains(month) && day > 28 {
             throw ValidationError.invalidDay(String(day))
         }
         
