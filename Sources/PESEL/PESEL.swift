@@ -1,7 +1,5 @@
 import Foundation
 
-
-
 public struct PESEL {
     enum ValidationError: Error {
         case invalidNumber
@@ -45,14 +43,9 @@ public struct PESEL {
             throw ValidationError.numberTooLong(number.count)
         }
         
-        let month = number.prefix(4).suffix(2)
+        let month = Int(number.prefix(4).suffix(2))!
         
-        if month == "00"
-            || (Int(month)! > 12 && Int(month)! < 21)
-            || (Int(month)! > 32 && Int(month)! < 41)
-            || (Int(month)! > 52 && Int(month)! < 61)
-            || (Int(month)! > 72 && Int(month)! < 81)
-            || Int(month)! > 92 {
+        if !PESEL.isValid(month: month) {
             throw ValidationError.invalidMonth(String(month))
         }
         
@@ -64,13 +57,13 @@ public struct PESEL {
         
         let monthsWithMax29Days = [ 2, 22, 42, 62, 82 ]
         
-        if monthsWithMax29Days.contains(Int(month)!) && Int(day)! > 29 {
+        if monthsWithMax29Days.contains(month) && Int(day)! > 29 {
             throw ValidationError.invalidDay(String(day))
         }
         
         let monthsWith30Days = [4, 6, 9, 11, 24, 26, 29, 31, 44, 46, 49, 51, 64, 66, 69, 71, 84, 86, 89, 91 ]
         
-        if monthsWith30Days.contains(Int(month)!) && Int(day)! > 30 {
+        if monthsWith30Days.contains(month) && Int(day)! > 30 {
             throw ValidationError.invalidDay(String(day))
         }
         
@@ -79,31 +72,30 @@ public struct PESEL {
         let lastTwoYearDigits = number.prefix(2)
         
         var year = Int(lastTwoYearDigits)!
-        let monthInt = Int(month)!
         
-        switch monthInt {
+        switch month {
         case 1...12:
             year += 1900
-            self.month = Month(rawValue: monthInt)!
+            self.month = Month(rawValue: month)!
         case 21...32:
             year += 2000
-            self.month = Month(rawValue: monthInt - 20)!
+            self.month = Month(rawValue: month - 20)!
         case 41...52:
             year += 2100
-            self.month = Month(rawValue: monthInt - 40)!
+            self.month = Month(rawValue: month - 40)!
         case 61...72:
             year += 2200
-            self.month = Month(rawValue: monthInt - 60)!
+            self.month = Month(rawValue: month - 60)!
         case 81...92:
             year += 1800
-            self.month = Month(rawValue: monthInt - 80)!
+            self.month = Month(rawValue: month - 80)!
         default:
             throw ValidationError.invalidMonth(String(month))
         }
         
         self.year = year
         
-        if !PESEL.isLeapYear(year) && [ 2, 22, 42, 62, 82 ].contains(monthInt) && Int(day)! > 28 {
+        if !PESEL.isLeapYear(year) && [ 2, 22, 42, 62, 82 ].contains(month) && Int(day)! > 28 {
             throw ValidationError.invalidDay(String(day))
         }
         
@@ -147,5 +139,18 @@ public struct PESEL {
         } else {
             return checksum == (10 - modulo)
         }
+    }
+    
+    static func isValid(month: Int) -> Bool {
+        if month == 0
+            || (month > 12 && month < 21)
+            || (month > 32 && month < 41)
+            || (month > 52 && month < 61)
+            || (month > 72 && month < 81)
+            || month > 92 {
+            return false
+        }
+        
+        return true
     }
 }
