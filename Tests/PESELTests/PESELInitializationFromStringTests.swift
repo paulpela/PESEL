@@ -50,6 +50,7 @@ final class PESELInitializationFromStringTests: XCTestCase {
             XCTAssertNoThrow(try PESEL(pesel), "Failed for \(pesel)")
             XCTAssertNotNil(try? PESEL(pesel), "Failed for \(pesel)")
             
+            XCTAssertEqual(try PESEL(pesel)?.number, pesel, "Failed for \(pesel)")
             XCTAssertEqual(try PESEL(pesel)?.year, validationData.year, "Failed for \(pesel)")
             XCTAssertEqual(try PESEL(pesel)?.month, validationData.month, "Failed for \(pesel)")
             XCTAssertEqual(try PESEL(pesel)?.day, validationData.day, "Failed for \(pesel)")

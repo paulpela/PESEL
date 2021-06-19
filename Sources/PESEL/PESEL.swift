@@ -26,6 +26,8 @@ public struct PESEL {
         case december
     }
     
+    let number: String
+    
     let year: Int
     let month: Month
     let day: Int
@@ -106,6 +108,8 @@ public struct PESEL {
         if !PESEL.validateChecksum(for: number) {
             throw ValidationError.invalidChecksum
         }
+        
+        self.number = number
     }
     
     static func isLeapYear(_ year: Int) -> Bool {
