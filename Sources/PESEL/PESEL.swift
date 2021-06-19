@@ -9,6 +9,7 @@ public struct PESEL {
         case invalidMonth(String)
         case invalidDay(String)
         case invalidChecksum
+        case invalidPersonalIdentificationNumber
     }
     
     enum Month: Int {
@@ -31,6 +32,8 @@ public struct PESEL {
     let year: Int
     let month: Month
     let day: Int
+    
+    let personalIdentificationNumber: Int
     
     var birthday: Date? {
         let calendar = Calendar(identifier: .gregorian)
@@ -119,6 +122,12 @@ public struct PESEL {
         }
         
         self.number = number
+        
+        if let personalIdentificationNumber = Int(number.suffix(5).prefix(4)) {
+            self.personalIdentificationNumber = personalIdentificationNumber
+        } else {
+            throw ValidationError.invalidPersonalIdentificationNumber
+        }
     }
     
     static func isLeapYear(_ year: Int) -> Bool {
