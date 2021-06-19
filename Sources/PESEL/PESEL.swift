@@ -1,6 +1,6 @@
 import Foundation
 
-public struct PESEL: Equatable, Comparable {
+public struct PESEL: Equatable, Comparable, Hashable {
     public static func < (lhs: PESEL, rhs: PESEL) -> Bool {
         if lhs.birthday == rhs.birthday {
             return lhs.personalIdentificationNumber < lhs.personalIdentificationNumber
