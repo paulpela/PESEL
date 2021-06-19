@@ -32,6 +32,15 @@ public struct PESEL {
     let month: Month
     let day: Int
     
+    var birthday: Date? {
+        let calendar = Calendar(identifier: .gregorian)
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month.rawValue
+        dateComponents.day = day
+        return calendar.date(from: dateComponents) ?? nil
+    }
+    
     init?(_ number: String) throws {
         if !CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: number)) {
             throw ValidationError.invalidCharacters

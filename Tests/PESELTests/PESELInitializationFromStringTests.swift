@@ -13,6 +13,10 @@ final class PESELInitializationFromStringTests: XCTestCase {
         let year: Int
         let month: PESEL.Month
         let day: Int
+        
+        var birthday: Date? {
+            Date.from(year: year, month: month.rawValue, day: day)
+        }
     }
     
     func testInitializesFromCorrectNumber() {
@@ -54,6 +58,8 @@ final class PESELInitializationFromStringTests: XCTestCase {
             XCTAssertEqual(try PESEL(pesel)?.year, validationData.year, "Failed for \(pesel)")
             XCTAssertEqual(try PESEL(pesel)?.month, validationData.month, "Failed for \(pesel)")
             XCTAssertEqual(try PESEL(pesel)?.day, validationData.day, "Failed for \(pesel)")
+            
+            XCTAssertEqual(try PESEL(pesel)?.birthday, validationData.birthday, "Failed for \(pesel)")
         }
     }
     
