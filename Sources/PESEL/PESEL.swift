@@ -1,6 +1,6 @@
 import Foundation
 
-public struct PESEL {
+public struct PESEL: Equatable {
     enum ValidationError: Error {
         case invalidNumber
         case numberTooShort(Int)
