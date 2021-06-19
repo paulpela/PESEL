@@ -49,6 +49,8 @@ final class PESELInitializationFromStringTests: XCTestCase {
             "01252089245": ValidData(year: 2001, month: .may, day: 20, pin: 8924, sex: .female),
             "04321652618": ValidData(year: 2004, month: .december, day: 16, pin: 5261, sex: .male),
             "05232787477": ValidData(year: 2005, month: .march, day: 27, pin: 8747, sex: .male),
+            "84111804478": ValidData(year: 1984, month: .november, day: 18, pin: 447, sex: .male),
+            "20322704222": ValidData(year: 2020, month: .december, day: 27, pin: 422, sex: .female),
             // TODO: add for additional covered centuries
         ]
         
