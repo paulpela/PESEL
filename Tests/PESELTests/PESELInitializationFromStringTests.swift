@@ -220,6 +220,22 @@ final class PESELInitializationFromStringTests: XCTestCase {
             XCTAssertThrowsError(try PESEL(invalidNumber), "Did not throw error for \(invalidNumber)")
         }
     }
+    
+    func testFailsToInitializeIfPINInvalid() {
+        let invalidTestNumbers = [
+            "04261600006",
+            "00323000002",
+            "03310700000",
+            "05282100001",
+            "02320500003",
+            "03273000006",
+            "03212200009",
+        ]
+        
+        for invalidNumber in invalidTestNumbers {
+            XCTAssertThrowsError(try PESEL(invalidNumber), "Did not throw error for \(invalidNumber)")
+        }
+    }
 }
 
 extension Date {

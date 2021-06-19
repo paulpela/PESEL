@@ -136,6 +136,10 @@ public struct PESEL {
         self.number = number
         
         if let personalIdentificationNumber = Int(number.suffix(5).prefix(4)) {
+            guard personalIdentificationNumber != 0 else {
+                throw ValidationError.invalidPersonalIdentificationNumber
+            }
+            
             self.personalIdentificationNumber = personalIdentificationNumber
         } else {
             throw ValidationError.invalidPersonalIdentificationNumber
