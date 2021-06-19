@@ -14,6 +14,7 @@ final class PESELInitializationFromStringTests: XCTestCase {
         let month: PESEL.Month
         let day: Int
         let pin: Int // Personal Identification Number
+        let sex: PESEL.Sex
         
         var birthday: Date? {
             Date.from(year: year, month: month.rawValue, day: day)
@@ -22,32 +23,32 @@ final class PESELInitializationFromStringTests: XCTestCase {
     
     func testInitializesFromCorrectNumber() {
         let validTestData: [String:ValidData] = [
-            "73111816477": ValidData(year: 1973, month: .november, day: 18, pin: 1647),
-            "80012056279": ValidData(year: 1980, month: .january, day: 20, pin: 5627),
-            "54031785799": ValidData(year: 1954, month: .march, day: 17, pin: 8579),
-            "64040822765": ValidData(year: 1964, month: .april, day: 8, pin: 2276),
-            "81051153329": ValidData(year: 1981, month: .may, day: 11, pin: 5332),
-            "51052726457": ValidData(year: 1951, month: .may, day: 27, pin: 2645),
-            "60020586612": ValidData(year: 1960, month: .february, day: 5, pin: 8661),
-            "04261644564": ValidData(year: 2004, month: .june, day: 16, pin: 4456),
-            "00323074881": ValidData(year: 2000, month: .december, day: 30, pin: 7488),
-            "03310787599": ValidData(year: 2003, month: .november, day: 7, pin: 8759),
-            "05282158489": ValidData(year: 2005, month: .august, day: 21, pin: 5848),
-            "02320516474": ValidData(year: 2002, month: .december, day: 5, pin: 1647),
-            "03273086162": ValidData(year: 2003, month: .july, day: 30, pin: 8616),
-            "03212254467": ValidData(year: 2003, month: .january, day: 22, pin: 5446),
-            "05322599241": ValidData(year: 2005, month: .december, day: 25, pin: 9924),
-            "04220764731": ValidData(year: 2004, month: .february, day: 7, pin: 6473),
-            "02303089164": ValidData(year: 2002, month: .october, day: 30, pin: 8916),
-            "01312064656": ValidData(year: 2001, month: .november, day: 20, pin: 6465),
-            "04230489619": ValidData(year: 2004, month: .march, day: 4, pin: 8961),
-            "01280355941": ValidData(year: 2001, month: .august, day: 3, pin: 5594),
-            "03260412242": ValidData(year: 2003, month: .june, day: 4, pin: 1224),
-            "01312691159": ValidData(year: 2001, month: .november, day: 26, pin: 9115),
-            "02321938974": ValidData(year: 2002, month: .december, day: 19, pin: 3897),
-            "01252089245": ValidData(year: 2001, month: .may, day: 20, pin: 8924),
-            "04321652618": ValidData(year: 2004, month: .december, day: 16, pin: 5261),
-            "05232787477": ValidData(year: 2005, month: .march, day: 27, pin: 8747),
+            "73111816477": ValidData(year: 1973, month: .november, day: 18, pin: 1647, sex: .male),
+            "80012056279": ValidData(year: 1980, month: .january, day: 20, pin: 5627, sex: .male),
+            "54031785799": ValidData(year: 1954, month: .march, day: 17, pin: 8579, sex: .male),
+            "64040822765": ValidData(year: 1964, month: .april, day: 8, pin: 2276, sex: .female),
+            "81051153329": ValidData(year: 1981, month: .may, day: 11, pin: 5332, sex: .female),
+            "51052726457": ValidData(year: 1951, month: .may, day: 27, pin: 2645, sex: .male),
+            "60020586612": ValidData(year: 1960, month: .february, day: 5, pin: 8661, sex: .male),
+            "04261644564": ValidData(year: 2004, month: .june, day: 16, pin: 4456, sex: .female),
+            "00323074881": ValidData(year: 2000, month: .december, day: 30, pin: 7488, sex: .female),
+            "03310787599": ValidData(year: 2003, month: .november, day: 7, pin: 8759, sex: .male),
+            "05282158489": ValidData(year: 2005, month: .august, day: 21, pin: 5848, sex: .female),
+            "02320516474": ValidData(year: 2002, month: .december, day: 5, pin: 1647, sex: .male),
+            "03273086162": ValidData(year: 2003, month: .july, day: 30, pin: 8616, sex: .female),
+            "03212254467": ValidData(year: 2003, month: .january, day: 22, pin: 5446, sex: .female),
+            "05322599241": ValidData(year: 2005, month: .december, day: 25, pin: 9924, sex: .female),
+            "04220764731": ValidData(year: 2004, month: .february, day: 7, pin: 6473, sex: .male),
+            "02303089164": ValidData(year: 2002, month: .october, day: 30, pin: 8916, sex: .female),
+            "01312064656": ValidData(year: 2001, month: .november, day: 20, pin: 6465, sex: .male),
+            "04230489619": ValidData(year: 2004, month: .march, day: 4, pin: 8961, sex: .male),
+            "01280355941": ValidData(year: 2001, month: .august, day: 3, pin: 5594, sex: .female),
+            "03260412242": ValidData(year: 2003, month: .june, day: 4, pin: 1224, sex: .female),
+            "01312691159": ValidData(year: 2001, month: .november, day: 26, pin: 9115, sex: .male),
+            "02321938974": ValidData(year: 2002, month: .december, day: 19, pin: 3897, sex: .male),
+            "01252089245": ValidData(year: 2001, month: .may, day: 20, pin: 8924, sex: .female),
+            "04321652618": ValidData(year: 2004, month: .december, day: 16, pin: 5261, sex: .male),
+            "05232787477": ValidData(year: 2005, month: .march, day: 27, pin: 8747, sex: .male),
             // TODO: add for additional covered centuries
         ]
         
@@ -63,6 +64,8 @@ final class PESELInitializationFromStringTests: XCTestCase {
             XCTAssertEqual(try PESEL(pesel)?.birthday, validationData.birthday, "Failed for \(pesel)")
             
             XCTAssertEqual(try PESEL(pesel)?.personalIdentificationNumber, validationData.pin, "Failed for \(pesel)")
+            
+            XCTAssertEqual(try PESEL(pesel)?.sex, validationData.sex, "Failed for \(pesel)")
         }
     }
     

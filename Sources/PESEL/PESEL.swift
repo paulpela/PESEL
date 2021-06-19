@@ -27,6 +27,10 @@ public struct PESEL {
         case december
     }
     
+    enum Sex {
+        case male, female
+    }
+    
     let number: String
     
     let year: Int
@@ -42,6 +46,14 @@ public struct PESEL {
         dateComponents.month = month.rawValue
         dateComponents.day = day
         return calendar.date(from: dateComponents) ?? nil
+    }
+    
+    var sex: Sex {
+        if personalIdentificationNumber % 2 == 0 {
+            return .female
+        } else {
+            return .male
+        }
     }
     
     init?(_ number: String) throws {
