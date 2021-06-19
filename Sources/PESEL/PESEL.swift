@@ -1,6 +1,14 @@
 import Foundation
 
-public struct PESEL: Equatable {
+public struct PESEL: Equatable, Comparable {
+    public static func < (lhs: PESEL, rhs: PESEL) -> Bool {
+        if lhs.birthday == rhs.birthday {
+            return lhs.personalIdentificationNumber < lhs.personalIdentificationNumber
+        }
+        
+        return lhs.birthday < rhs.birthday
+    }
+    
     enum ValidationError: Error {
         case invalidNumber
         case numberTooShort(Int)
@@ -39,13 +47,13 @@ public struct PESEL: Equatable {
     
     let personalIdentificationNumber: Int
     
-    var birthday: Date? {
+    var birthday: Date {
         let calendar = Calendar(identifier: .gregorian)
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month.rawValue
         dateComponents.day = day
-        return calendar.date(from: dateComponents) ?? nil
+        return calendar.date(from: dateComponents)!
     }
     
     var sex: Sex {
