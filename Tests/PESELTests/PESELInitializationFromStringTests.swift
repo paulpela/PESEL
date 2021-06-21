@@ -51,7 +51,13 @@ final class PESELInitializationFromStringTests: XCTestCase {
             "05232787477": ValidData(year: 2005, month: .march, day: 27, pin: 8747, sex: .male),
             "84111804478": ValidData(year: 1984, month: .november, day: 18, pin: 447, sex: .male),
             "20322704222": ValidData(year: 2020, month: .december, day: 27, pin: 422, sex: .female),
-            // TODO: add for additional covered centuries
+            "20471615921": ValidData(year: 2120, month: .july, day: 16, pin: 1592, sex: .female),
+            "78422710508": ValidData(year: 2178, month: .february, day: 27, pin: 1050, sex: .female),
+            "41450204497": ValidData(year: 2141, month: .may, day: 2, pin: 449, sex: .male),
+            "23660105012": ValidData(year: 2223, month: .june, day: 1, pin: 501, sex: .male),
+            "09692719764": ValidData(year: 2209, month: .september, day: 27, pin: 1976, sex: .female),
+            "77833018625": ValidData(year: 1877, month: .march, day: 30, pin: 1862, sex: .female),
+            "90900303781": ValidData(year: 1890, month: .october, day: 3, pin: 378, sex: .female),
         ]
         
         for (pesel, validationData) in validTestData {
